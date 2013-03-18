@@ -5,6 +5,7 @@ import java.io.File;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.provider.Settings;
 
 /**
@@ -101,6 +102,35 @@ public class OSIntentUtil {
 		ComponentName componentName = new ComponentName(pkg, cls);
 		intent.setComponent(componentName);
 		intent.setAction("android.intent.action.MAIN");
+		return intent;
+	}
+	
+	
+	
+	public static final String PIKE_FILE_TYPE_IMAGE = "image";
+	public static final String PIKE_FILE_TYPE_FILE = "file";
+	/**
+	 * 通过系统自带的程序选取文件
+	 * @param fileType  根据不同手机自带的程序提供的文件类型不一
+	 * @return  
+	 */
+	public static Intent getIntentPickFile(String fileType){
+		Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+		intent.addCategory(Intent.CATEGORY_OPENABLE);
+		if(fileType == null){
+			intent.setType("*/*");
+		}else{
+			intent.setType(fileType + "/*");
+		}
+		return intent;
+	}
+	
+	/**
+	 * 调用系统拍照页面
+	 * @return
+	 */
+	public static Intent getIntentImageCapture(){
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE); 
 		return intent;
 	}
 
